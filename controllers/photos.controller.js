@@ -10,6 +10,30 @@ exports.add = async (req, res) => {
 
     if(title && author && email && file) { // if fields are not empty...
 
+      const authorPattern = new RegExp(
+        /(<\s*(strong|em)*>(([A-z]|\s)*)<\s*\/\s*(strong|em)>)|(([A-z]|\s|\.)*)/,
+        "g"
+      );
+      const emailPattern = new RegExp(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "g"
+      );
+
+      const titlePattern = new RegExp(
+        /(<\s*(strong|em)*>(([A-z]|\s)*)<\s*\/\s*(strong|em)>)|(([A-z]|\s|\.)*)/,
+        "g"
+      );
+
+      if (!authorPattern.test(author)) {
+        throw new Error("Invalid author");
+      }
+      if (!emailPattern.test(email)) {
+        throw new Error("Invalid email");
+      }
+      if (!titlePattern.test(title)) {
+        throw new Error("Invalid title");
+      }
+
       const fileName = file.path.split('/').slice(-1)[0]; // cut only filename from full path, e.g. C:/test/abc.jpg -> abc.jpg
       const fileExt = fileName.split('.').slice(-1)[0];
 
