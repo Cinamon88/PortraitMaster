@@ -84,7 +84,6 @@ exports.vote = async (req, res) => {
     if(findUser) {
       // if user already voted...
       if(findUser.votes.includes(photoToUpdate._id)) {
-        res.status(500).json(err);
       } else {
         // if user has not voted yet...
         photoToUpdate.votes += 1;
